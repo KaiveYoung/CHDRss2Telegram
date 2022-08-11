@@ -1,0 +1,21 @@
+version: "3.4"
+
+x-environments:
+  &shared-environment
+  TZ: Asia/Shanghai
+  CHD_RSS: https://chdbits.co/torrentrss.php?rows=10
+  TELEGRAM_TOKEN: 
+  TELEGRAM_CHATID: 
+  CELERY_BROKER: redis://redis/1
+
+services:
+  chd:
+    image: kaive/chdrss2telegram:latest
+    restart: always
+    environment: *shared-environment
+    build: .
+    command: "python -m run"
+
+  redis:
+    image: redis:latest
+    restart: always
